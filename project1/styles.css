@@ -1,0 +1,35 @@
+*{
+  box-sizing: border-box;
+}
+body {
+    width: 40%;
+    background-color: rgba(0, 0, 0, 0.911);
+    color: rgb(224, 224, 224);
+    font-family: sans-serif;
+    padding: 10px;
+    margin: 5% auto;
+    
+
+}
+
+#main-h1{
+    font-size: 45px;
+}
+
+a {
+    color: grey;
+}
+
+img {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+code{
+    background-color: #252525;
+    color: red;
+    padding: 4px;
+    border-radius: 5px;
+
+}
