@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Vina+Sans&display=swap');
+
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.container{
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.294);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+#clock{
+   
+    font-size: 10rem;
+    font-weight: 600;
+    color: #ccc;
+}
+
+.bg-video{
+    position:absolute;
+    bottom:0;
+    z-index: -1;
+    
+}
+
+@media (min-aspect-ratio:16/9){
+    .bg-video{
+        width: 100%;
+        height: auto;
+        /* background-size: cover; */
+    }
+
+}
+@media (max-aspect-ratio:16/9){
+    .background-clip{
+        width:auto;
+        height: 100%;
+
+    }
+
+}
+
+.quoteForFun{
+    font-family: 'Vina Sans', sans-serif;
+    width: 45rem;
+    font-size: 40px;
+    background-color: rgba(0, 0, 0, 0.653);
+    position: relative;
+    color: #cccccccc;
+    padding: 20px;
+    border-radius: 60px 60px 0px 60px;
+}
+
+#quote-author{
+    position: relative;
+    left: 27rem;
+}
+
+.fav-apps{
+    font-size: 3rem;
+    background-color: rgba(0, 0, 0, 0.566);
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    top: 20px;
+    width: 35rem;
+   
+}
+
+.fav-apps > a{
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.71);
+    margin: 13px 20px;
+    
+}
+
+#search-bar{
+    padding: 10px;
+    border:none;
+    border-radius: 20px;
+    width: 32rem;
+    font-size: 20px;
+}
+
+form{
+    position: relative;
+    bottom: 20px;
+}
+
+.quotes{
+    font-size: 100px;
+}
+
+
+
