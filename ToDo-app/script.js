@@ -34,6 +34,11 @@ function addTask(taskText) {
     listItem.classList.toggle("completed");
   });
 
+  const task = {
+    text: taskText,
+    checked: checkbox.checked,
+  };
+
   const deleteButton = document.createElement("i");
   deleteButton.className = "fas fa-trash-can";
 
@@ -60,15 +65,17 @@ function restoreTasks(tasks) {
   for (const task of tasks) {
     const listItem = document.createElement("li");
     listItem.classList.add("taskItem");
-    listItem.textContent = task;
+    listItem.textContent = task.text;
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("checkbox");
-    if (task.includes("[DONE]")) {
+    checkbox.checked = task.checked; // Set checkbox state based on stored value
+
+    if (checkbox.checked) {
       listItem.classList.add("completed");
-      checkbox.checked = true;
     }
+
     checkbox.addEventListener("change", () => {
       listItem.classList.toggle("completed");
     });
@@ -90,7 +97,10 @@ function getTaskList() {
   const tasks = [];
 
   for (const item of taskItems) {
-    tasks.push(item.innerText.trim());
+    tasks.push({
+      text: item.innerText.trim(),
+      checked: item.querySelector(".checkbox").checked,
+    });
   }
   return tasks;
 }
