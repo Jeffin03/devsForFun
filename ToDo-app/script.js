@@ -70,7 +70,7 @@ function restoreTasks(tasks) {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("checkbox");
-    checkbox.checked = task.checked; // Set checkbox state based on stored value
+    checkbox.checked = task.checked; 
 
     if (task.checked) {
       listItem.classList.add("completed");
