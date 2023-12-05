@@ -1,134 +1,88 @@
-const inputForm = document.getElementById("inputForm");
-const taskInput = document.getElementById("userInput");
-const addTaskBtn = document.getElementById("addTask");
-const taskList = document.getElementById("taskList");
-const clearCompletedBtn = document.getElementById("clearCompleted");
-const clearAllBtn = document.getElementById("clearAll");
+document.addEventListener('DOMContentLoaded', function () {
+  const inputForm = document.getElementById('inputForm');
+  const userInput = document.getElementById('userInput');
+  // const addTaskBtn = document.getElementById('addTask');
+  const taskList = document.getElementById('taskList');
+  const clearCompletedBtn = document.getElementById('clearCompleted');
+  const clearAllBtn = document.getElementById('clearAll');
 
-const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-restoreTasks(storedTasks);
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-inputForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  
-  const taskText = taskInput.value.trim();
-
-  if (taskText) {
-    addTask(taskText);
-    taskInput.value = "";
-
-    const currentTasks = getTaskList();
-    localStorage.setItem("tasks", JSON.stringify(currentTasks));
+  function renderTasks() {
+      taskList.innerHTML = '';
+      tasks.forEach((task, index) => {
+          const li = document.createElement('li');
+          li.className = `taskItem ${task.completed ? 'completed' : ''}`;
+          li.innerHTML = `
+              <span>${task.text}</span>
+              <div>
+              <i class="fas fa-check-circle checkbox"></i>
+              <i class="fas fa-trash deleteBtn"></i>
+              </div>
+          `;
+          li.querySelector('.checkbox').addEventListener('click', () => toggleTask(index));
+          li.querySelector('.deleteBtn').addEventListener('click', () => deleteTask(index));
+          taskList.appendChild(li);
+      });
   }
-});
 
-function addTask(taskText) {
-  const listItem = document.createElement("li");
-  listItem.classList.add("taskItem");
-  listItem.textContent = taskText;
+  renderTasks();
 
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.classList.add("checkbox");
-  checkbox.addEventListener("change", () => {
-    listItem.classList.toggle("completed");
+  function addTask(text) {
+      tasks.push({ text, completed: false });
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      renderTasks();
+  }
+
+  function toggleTask(index) {
+      tasks[index].completed = !tasks[index].completed;
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      renderTasks();
+  }
+
+  function deleteTask(index) {
+      tasks.splice(index, 1);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+      renderTasks();
+  }
+
+  inputForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const taskText = userInput.value.trim();
+      if (taskText !== '') {
+          addTask(taskText);
+          userInput.value = '';
+      }
   });
 
-  const task = {
-    text: taskText,
-    checked: checkbox.checked,
-  };
+  clearCompletedBtn.addEventListener('click', function () {
+      tasks.forEach((task, index) => {
+          if (task.completed) {
+              deleteTask(index);
+          }
+      });
+  });
 
-  const deleteButton = document.createElement("i");
-  deleteButton.className = "fas fa-trash-can";
+  clearAllBtn.addEventListener('click', function () {
 
-  const span = document.createElement("div");
-  span.appendChild(checkbox);
-  span.appendChild(deleteButton);
+    const confirmation = confirm("Are you sure you want to clear all tasks? This action cannot be undone.");
 
-  listItem.appendChild(span);
-  taskList.appendChild(listItem);
-}
-
-taskList.addEventListener("click", (event) => {
-  const target = event.target;
-  if (target.classList.contains("fa-trash-can")) {
-    taskList.removeChild(target.parentNode.parentNode);
-    const currentTasks = getTaskList();
-    localStorage.setItem("tasks", JSON.stringify(currentTasks));
-  }
-});
-
-function restoreTasks(tasks) {
-  taskList.innerHTML = "";
-
-  for (const task of tasks) {
-    const listItem = document.createElement("li");
-    listItem.classList.add("taskItem");
-    listItem.textContent = task.text;
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("checkbox");
-    checkbox.checked = task.checked; 
-
-    if (task.checked) {
-      listItem.classList.add("completed");
+    if(confirmation){
+      localStorage.removeItem('tasks');
+      tasks.length = 0;
+      renderTasks();
     }
+      
+  });
 
-    checkbox.addEventListener("change", () => {
-      listItem.classList.toggle("completed");
-      task.checked = checkbox.checked;
-      localStorage.setItem("tasks", JSON.stringify(storedTasks));
-    });
-
-    const deleteButton = document.createElement("i");
-    deleteButton.className = "fas fa-trash-can";
-
-    const span = document.createElement("div");
-    span.appendChild(checkbox);
-    span.appendChild(deleteButton);
-
-    listItem.appendChild(span);
-    taskList.appendChild(listItem);
-  }
-}
-
-function getTaskList() {
-  const taskItems = document.querySelectorAll("#taskList .taskItem");
-  const tasks = [];
-
-  for (const item of taskItems) {
-    tasks.push({
-      text: item.innerText.trim(),
-      checked: item.querySelector(".checkbox").checked,
-    });
-  }
-  return tasks;
-}
-
-clearCompletedBtn.addEventListener("click", () => {
-  const doneTasks = document.querySelectorAll(".taskItem.completed");
-
-  for (const task of doneTasks) {
-    taskList.removeChild(task);
-  }
-
-  const currentTasks = getTaskList();
-  localStorage.setItem("tasks", JSON.stringify(currentTasks));
-});
-
-clearAllBtn.addEventListener("click", () => {
-  const confirmation = confirm("Are you sure you want to clear all tasks? This action cannot be undone.");
-
-  if (confirmation) {
-    const allTasks = document.querySelectorAll('.taskItem');
-
-    for (const task of allTasks) {
-      taskList.removeChild(task);
-    }
-
-    const currentTasks = getTaskList();
-    localStorage.setItem('tasks', JSON.stringify(currentTasks));
-  }
+  userInput.addEventListener('keypress', function (event) {
+      if (event.key === 'Enter') {
+          event.preventDefault();
+          const taskText = userInput.value.trim();
+          if (taskText !== '') {
+              addTask(taskText);
+              userInput.value = '';
+          }
+      }
+  });
 });
