@@ -101,7 +101,7 @@ function getTaskList() {
   for (const item of taskItems) {
     tasks.push({
       text: item.innerText.trim(),
-      checked: item.querySelector(".taskItem.checkbox").checked,
+      checked: item.querySelector(".checkbox").checked,
     });
   }
   return tasks;
