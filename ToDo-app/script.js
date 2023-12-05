@@ -72,12 +72,14 @@ function restoreTasks(tasks) {
     checkbox.classList.add("checkbox");
     checkbox.checked = task.checked; // Set checkbox state based on stored value
 
-    if (checkbox.checked) {
+    if (task.checked) {
       listItem.classList.add("completed");
     }
 
     checkbox.addEventListener("change", () => {
       listItem.classList.toggle("completed");
+      task.checked = checkbox.checked;
+      localStorage.setItem("tasks", JSON.stringify(storedTasks));
     });
 
     const deleteButton = document.createElement("i");
@@ -99,7 +101,7 @@ function getTaskList() {
   for (const item of taskItems) {
     tasks.push({
       text: item.innerText.trim(),
-      checked: item.querySelector(".checkbox").checked,
+      checked: item.querySelector(".taskItem.checkbox").checked,
     });
   }
   return tasks;
