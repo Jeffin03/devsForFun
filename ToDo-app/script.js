@@ -5,42 +5,38 @@ const taskList = document.getElementById("taskList");
 const clearCompletedBtn = document.getElementById("clearCompleted");
 const clearAllBtn = document.getElementById("clearAll");
 
-let storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
 restoreTasks(storedTasks);
 
-// Handle submit event for both button click and Enter key press
 inputForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  addTask();
-  taskInput.value = "";
-});
-
-taskInput.addEventListener("keyup", (event) => {
-  if (event.key === "Enter") {
-    addTask();
-    taskInput.value = "";
-  }
-});
-
-function addTask() {
+  
   const taskText = taskInput.value.trim();
 
-  // Prevent empty tasks
-  if (!taskText) {
-    alert("Please enter a task!");
-    return;
-  }
+  if (taskText) {
+    addTask(taskText);
+    taskInput.value = "";
 
+    const currentTasks = getTaskList();
+    localStorage.setItem("tasks", JSON.stringify(currentTasks));
+  }
+});
+
+function addTask(taskText) {
   const listItem = document.createElement("li");
   listItem.classList.add("taskItem");
+  listItem.textContent = taskText;
 
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.classList.add("checkbox");
+  checkbox.addEventListener("change", () => {
+    listItem.classList.toggle("completed");
+  });
 
   const task = {
     text: taskText,
-    checked: false,
+    checked: checkbox.checked,
   };
 
   const deleteButton = document.createElement("i");
@@ -51,27 +47,17 @@ function addTask() {
   span.appendChild(deleteButton);
 
   listItem.appendChild(span);
-  listItem.textContent = taskText; // Set text after checkbox creation
-
   taskList.appendChild(listItem);
-
-  storedTasks.push(task);
-  localStorage.setItem("tasks", JSON.stringify(storedTasks));
-
-  // Toggle completed state on checkbox click
-  checkbox.addEventListener("change", () => {
-    listItem.classList.toggle("completed");
-    task.checked = checkbox.checked;
-    localStorage.setItem("tasks", JSON.stringify(storedTasks));
-  });
-
-  // Remove task on delete button click
-  deleteButton.addEventListener("click", () => {
-    taskList.removeChild(listItem);
-    storedTasks = storedTasks.filter((t) => t.text !== taskText);
-    localStorage.setItem("tasks", JSON.stringify(storedTasks));
-  });
 }
+
+taskList.addEventListener("click", (event) => {
+  const target = event.target;
+  if (target.classList.contains("fa-trash-can")) {
+    taskList.removeChild(target.parentNode.parentNode);
+    const currentTasks = getTaskList();
+    localStorage.setItem("tasks", JSON.stringify(currentTasks));
+  }
+});
 
 function restoreTasks(tasks) {
   taskList.innerHTML = "";
@@ -84,7 +70,7 @@ function restoreTasks(tasks) {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("checkbox");
-    checkbox.checked = task.checked;
+    checkbox.checked = task.checked; // Set checkbox state based on stored value
 
     if (task.checked) {
       listItem.classList.add("completed");
@@ -108,28 +94,41 @@ function restoreTasks(tasks) {
   }
 }
 
+function getTaskList() {
+  const taskItems = document.querySelectorAll("#taskList .taskItem");
+  const tasks = [];
+
+  for (const item of taskItems) {
+    tasks.push({
+      text: item.innerText.trim(),
+      checked: item.querySelector(".taskItem.checkbox").checked,
+    });
+  }
+  return tasks;
+}
+
 clearCompletedBtn.addEventListener("click", () => {
   const doneTasks = document.querySelectorAll(".taskItem.completed");
 
   for (const task of doneTasks) {
     taskList.removeChild(task);
-    storedTasks = storedTasks.filter((t) => !t.checked);
   }
 
-  localStorage.setItem("tasks", JSON.stringify(storedTasks));
+  const currentTasks = getTaskList();
+  localStorage.setItem("tasks", JSON.stringify(currentTasks));
 });
 
 clearAllBtn.addEventListener("click", () => {
   const confirmation = confirm("Are you sure you want to clear all tasks? This action cannot be undone.");
 
   if (confirmation) {
-    taskList.innerHTML = "";
-    storedTasks = [];
-    localStorage.setItem("tasks", JSON.stringify(storedTasks));
+    const allTasks = document.querySelectorAll('.taskItem');
+
+    for (const task of allTasks) {
+      taskList.removeChild(task);
+    }
+
+    const currentTasks = getTaskList();
+    localStorage.setItem('tasks', JSON.stringify(currentTasks));
   }
 });
-
-window.addEventListener("beforeunload", () => {
-  localStorage.setItem("tasks", JSON.stringify(storedTasks));
-});
-
