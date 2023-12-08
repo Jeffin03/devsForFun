@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="style.css" rel="stylesheet" />
+  <script src="https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
+
+</head>
+
+<body>
+  <div id="main-container">
+    <h1>Green Screen Image Editor</h1>
+    <div id="imageInputSection">
+      <div class="canvasBox">
+        <input type="file" accept="image/*" multiple="false" id="greenImageInput" onchange="upload1()" />
+        <canvas id="greenInputCanvas"> </canvas>
+      </div>
+      <div class="canvasBox">
+        <input type="file" accept="image/*" multiple="false" id="bgImageInput" onchange="upload2()" />
+        <canvas id="bgInputCanvas"> </canvas>
+      </div>
+    </div>
+    <button type="button">Merge Image</button>
+  </div>
+  <script src="./script.js"></script>
+</body>
+
+</html>
