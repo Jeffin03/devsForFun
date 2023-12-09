@@ -16,7 +16,7 @@ canvas{
 .canvasBox{
     display: flex;
     flex-direction: column;
-    /* width: 40rem; */
+    width: 40rem;
     margin: 0 auto;
 }
 
@@ -29,5 +29,9 @@ canvas{
     #imageInputSection{
         flex-direction: column;
         align-items: center;
+    }
+
+    .canvasBox{
+        width: 20rem;
     }
 }
