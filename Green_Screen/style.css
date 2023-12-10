@@ -1,3 +1,9 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 body{
     color:white ;
     background-color: rgba(0, 0, 0, 0.847);
@@ -31,9 +37,19 @@ span{
     margin: 0 auto;
 }
 
+.canvasBox > input{
+    order:0;
+}
+
 #imageInputSection {
     display: flex;
     margin: 20px auto;
+}
+
+.merge-section > button{
+    cursor: pointer;
+    padding:5px;
+    margin: 15px;
 }
 
 @media (max-width: 1200px) {
@@ -43,6 +59,8 @@ span{
     }
 
     .canvasBox {
-        width: 20rem;
+        width: 30rem;
+        height: 16rem;
     }
+
 }

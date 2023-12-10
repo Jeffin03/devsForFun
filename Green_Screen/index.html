@@ -15,17 +15,17 @@
     <h1><span>Green</span> Screen Image Editor</h1>
     <div id="imageInputSection">
       <div>
-        <input type="file" accept="image/*" multiple="false" id="greenImageInput" onchange="upload1()" />
+        <input type="file" accept="image/*" multiple="false" id="greenImageInput" value="Choose Green Screen Image" onchange="upload1()" />
         <canvas id="greenInputCanvas" class="canvasBox"> </canvas>
       </div>
+      
       <div>
         <input type="file" accept="image/*" multiple="false" id="bgImageInput" onchange="upload2()" />
         <canvas id="bgInputCanvas" class="canvasBox"> </canvas>
       </div>
     </div>
-    <div>
-      <input type="button" value="Merge Image" onclick="mergeImage()" />
-      <input type="button" value="Clear" onclick="clear()">
+    <div class="merge-section">
+      <button onclick="mergeImage()">Merge Image</button>
     </div>
     <canvas id="mergedImage" class="canvasBox"></canvas>
   </div>
