@@ -15,7 +15,7 @@ body{
     align-items: center;
 }
 
-input,
+label,input,
 button {
     font-size: 20px;
     margin: 10px;

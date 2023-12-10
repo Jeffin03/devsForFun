@@ -41,3 +41,7 @@ function mergeImage() {
     finalImage.drawTo(canvasFinal);
 
 }
+
+// function clear(){
+//     location.reload;
+// }
