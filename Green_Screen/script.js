@@ -9,8 +9,6 @@ function upload1() {
     var greenScreenInput = document.getElementById("greenImageInput");
     greenScreenImage = new SimpleImage(greenScreenInput);
     greenScreenImage.drawTo(canvas1);
-
-    // return greenScreenImage;
 }
 
 function upload2() {
@@ -18,8 +16,6 @@ function upload2() {
     var bgScreenInput = document.getElementById("bgImageInput");
     bgScreenImage = new SimpleImage(bgScreenInput);
     bgScreenImage.drawTo(canvas2);
-
-    // return bgScreenImage;
 }
 
 function mergeImage() {
@@ -44,8 +40,4 @@ function mergeImage() {
     canvasFinal.height = finalImage.height;
     finalImage.drawTo(canvasFinal);
 
-}
-
-function clear() {
-    location.reload();
 }
