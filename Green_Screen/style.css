@@ -1,37 +1,48 @@
-#main-container{
+body{
+    color:white ;
+    background-color: rgba(0, 0, 0, 0.847);
+}
+
+#main-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-input,button{
+input,
+button {
     font-size: 20px;
     margin: 10px;
 }
 
-canvas{
-    border: 1px solid black;
+canvas {
+    border: 1px solid rgb(238, 237, 237);
 }
 
-.canvasBox{
+span{
+    color:green;
+}
+
+.canvasBox {
     display: flex;
     flex-direction: column;
-    width: 40rem;
+    width: 35rem;
+    height: 20rem;
     margin: 0 auto;
 }
 
-#imageInputSection{
+#imageInputSection {
     display: flex;
     margin: 20px auto;
 }
 
-@media (max-width :1200px) {
-    #imageInputSection{
+@media (max-width: 1200px) {
+    #imageInputSection {
         flex-direction: column;
         align-items: center;
     }
 
-    .canvasBox{
+    .canvasBox {
         width: 20rem;
     }
 }

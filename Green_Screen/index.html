@@ -12,19 +12,22 @@
 
 <body>
   <div id="main-container">
-    <h1>Green Screen Image Editor</h1>
+    <h1><span>Green</span> Screen Image Editor</h1>
     <div id="imageInputSection">
-      <div class="canvasBox">
+      <div>
         <input type="file" accept="image/*" multiple="false" id="greenImageInput" onchange="upload1()" />
-        <canvas id="greenInputCanvas"> </canvas>
+        <canvas id="greenInputCanvas" class="canvasBox"> </canvas>
       </div>
-      <div class="canvasBox">
+      <div>
         <input type="file" accept="image/*" multiple="false" id="bgImageInput" onchange="upload2()" />
-        <canvas id="bgInputCanvas"> </canvas>
+        <canvas id="bgInputCanvas" class="canvasBox"> </canvas>
       </div>
     </div>
-    <input type="button" value="Merge Image" onclick="mergeImage()" />
-  <canvas id="mergedImage" class="canvasBox"></canvas>
+    <div>
+      <input type="button" value="Merge Image" onclick="mergeImage()" />
+      <input type="button" value="Clear" onclick="clear()">
+    </div>
+    <canvas id="mergedImage" class="canvasBox"></canvas>
   </div>
   <script src="./script.js"></script>
 </body>

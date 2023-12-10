@@ -9,6 +9,8 @@ function upload1() {
     var greenScreenInput = document.getElementById("greenImageInput");
     greenScreenImage = new SimpleImage(greenScreenInput);
     greenScreenImage.drawTo(canvas1);
+
+    // return greenScreenImage;
 }
 
 function upload2() {
@@ -16,28 +18,34 @@ function upload2() {
     var bgScreenInput = document.getElementById("bgImageInput");
     bgScreenImage = new SimpleImage(bgScreenInput);
     bgScreenImage.drawTo(canvas2);
+
+    // return bgScreenImage;
 }
 
-function mergeImage(){
-    canvasFinal=document.getElementById("mergedImage");
+function mergeImage() {
+    canvasFinal = document.getElementById("mergedImage");
     var image1 = greenScreenImage;
     var image2 = bgScreenImage;
-    var finalImage = new SimpleImage(image1.width(),image1.height());
+    var finalImage = new SimpleImage(image1.width, image1.height);
 
 
-    for(pixel of image1.values()){
-        if(pixel.getGreen() > (pixel.getRed()+pixel.getBlue())){
+    for (pixel of image1.values()) {
+        if (pixel.getGreen() > (pixel.getRed() + pixel.getBlue())) {
             var x = pixel.getX();
             var y = pixel.getY();
-            var newPixel = image2.getPixel(x,y);
-            finalImage.setPixel(x,y,newPixel);
+            var newPixel = image2.getPixel(x, y);
+            finalImage.setPixel(x, y, newPixel);
         }
-        else{
-            finalImage.setPixel(pixel.getX(),pixel.getY(),pixel);
+        else {
+            finalImage.setPixel(pixel.getX(), pixel.getY(), pixel);
         }
     }
-    canvasFinal.width = finalImage.width();
-    canvasFinal.height = finalImage.height();
+    canvasFinal.width = finalImage.width;
+    canvasFinal.height = finalImage.height;
     finalImage.drawTo(canvasFinal);
 
+}
+
+function clear() {
+    location.reload();
 }
